@@ -49,7 +49,7 @@ function Plugin(
     // https://github.com/webpack/webpack/issues/645
     webpackOptions.output.path = '/_karma_webpack_/' + indexPath
     webpackOptions.output.publicPath = '/_karma_webpack_/' + publicPath
-    webpackOptions.output.filename = '[name]'
+    webpackOptions.output.filename = '[name].js';
     if (includeIndex) {
       webpackOptions.output.jsonpFunction = 'webpackJsonp' + index
     }
@@ -191,6 +191,9 @@ Plugin.prototype.make = function(compilation, callback) {
 }
 
 Plugin.prototype.readFile = function(file, callback) {
+  var origFile = file;
+  file += '.js';
+
   var middleware = this.middleware
   var optionsCount = this.optionsCount
 
@@ -222,7 +225,7 @@ Plugin.prototype.readFile = function(file, callback) {
         // Credit #69 @mewdriller
         if (e.code === 'ENOENT') {
           // eslint-disable-line quotes
-          this.waiting = [process.nextTick.bind(process, this.readFile.bind(this, file, callback))]
+          this.waiting = [process.nextTick.bind(process, this.readFile.bind(this, origFile, callback))]
 
           // throw otherwise
         } else {
@@ -237,7 +240,7 @@ Plugin.prototype.readFile = function(file, callback) {
   } else {
     // Retry to read once a build is finished
     // do it on process.nextTick to catch changes while building
-    this.waiting.push(process.nextTick.bind(process, this.readFile.bind(this, file, callback)))
+    this.waiting.push(process.nextTick.bind(process, this.readFile.bind(this, origFile, callback)))
   }
 }
 

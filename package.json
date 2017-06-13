@@ -1,6 +1,6 @@
 {
   "name": "karma-webpack",
-  "version": "2.0.3",
+  "version": "2.0.3-patch",
   "author": "Tobias Koppers @sokra",
   "description": "Use webpack with karma",
   "license": "MIT",
@@ -29,7 +29,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/webpack/karma-webpack.git"
+    "url": "https://github.com/Worksite/karma-webpack.git"
   },
   "peerDependencies": {
     "webpack": "^1.1.0 || ^2 || ^2.1.0-beta.0 || ^2.2.0-rc.0"
